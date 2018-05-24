@@ -31,6 +31,13 @@ class CreateFkTable extends Migration
             $table->unsignedInteger('address_id');
             $table->foreign('address_id')->references('id')->on('addresses');
         });      
+
+        Schema::table('doctors', function (Blueprint $table) {
+            $table->unsignedInteger('profile_id');
+            $table->foreign('profile_id')->references('id')->on('profiles');
+            $table->unsignedInteger('specialty_id');
+            $table->foreign('specialty_id')->references('id')->on('specialties');
+        });  
       
     }
 
