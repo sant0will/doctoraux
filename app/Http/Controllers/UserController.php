@@ -66,11 +66,12 @@ class UserController extends Controller
         $user->access = false;
         $user->type_id = $request->type;
         $user_id = $user->id;
+        $user_type = $user->type_id;
         $cidades = Cidade::orderBy('nome', 'asc')->get();
         $estados = Estado::orderBy('nome', 'asc')->get();
 
         if($user->save()){
-            return view('/profiles/create', compact('user_id', 'cidades', 'estados'))->with('success', 'Usuário cadastrado! Complete o cadastro de perfil.');
+            return view('/profiles/create', compact('user_id', 'user_type' ,'cidades', 'estados'))->with('success', 'Usuário cadastrado! Complete o cadastro de perfil.');
         } else {
             return back()->with('message', 'Falha no cadastro!');
         }

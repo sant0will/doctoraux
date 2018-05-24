@@ -54,6 +54,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request);
         $v = Validator::make($request->all(), [
             'name' => 'required|string|min:7|max:50',
             'phone' => 'required|string|min:10|max:15',
@@ -65,38 +66,47 @@ class ProfileController extends Controller
             'logradouro' => 'required|string|min:3|max:90', 
             'numero' => 'required|string|max:6',
             'complemento' => 'nullable|string|max:90',
+            'crm' => 'required|string|max:7',
+            'cpf' => 'required|string|max:14',
+            'birth' => 'required|string|max:10',
+            'email' => 'required|string|max:90',
+            'phone2' => 'nullable|string|max:20',
         ]);
+        
 
         if($v->fails()) {
             return back()->with('message', 'Confira os dados informados!')->withErrors($v)->withInput();
         }
 
-        $address = new Address;
-        $address->cep = $request->cep;
-        $address->state_id = $request->estado;
-        $address->city_id = $request->cidade;
-        $address->neighborhood = $request->bairro;
-        $address->street = $request->logradouro;
-        $address->number = $request->numero;
-        $address->complement = $request->complemento;
+        // try{
+        //     dd($request);
+        //     $address = new Address;
+        //     $address->cep = $request->cep;
+        //     $address->state_id = $request->estado;
+        //     $address->city_id = $request->cidade;
+        //     $address->neighborhood = $request->bairro;
+        //     $address->street = $request->logradouro;
+        //     $address->number = $request->numero;
+        //     $address->complement = $request->complemento;
+        //     $address->save()
 
-        if($address->save()){
-            $profile = new Profile;
-            $profile->name = $request->name;
-            $profile->phone = $request->phone;
-            $profile->gender = $request->sexo;
-            $profile->user_id = $request->id;
-            $profile->address_id = $address->id;
-            if($profile->save()){
-                return redirect('/profiles')->with(['success' => 'Cadastro realizado com sucesso!', 'name' => $user->name, 'email' => $user->email, 'pass' => $pass, 'id' => $user->id]);
-            }else {
-                return back()->with('error', 'Erro ao cadastrar o perfil');
-            }
-            
-        }else{
-            return back()->with('error', 'Erro ao cadastrar o perfil');
-        }
+        //     $profile = new Profile;
+        //     $profile->name = $request->name;
+        //     $profile->phone = $request->phone;
+        //     $profile->gender = $request->sexo;
+        //     $profile->user_id = $request->id;
+        //     $profile->address_id = $address->id;
+        //     $profile->save()
 
+
+
+
+                    
+               
+        //     return redirect('/profiles')->with(['success' => 'Cadastro realizado com sucesso!', 'name' => $user->name, 'email' => $user->email, 'pass' => $pass, 'id' => $user->id]);
+        // }catch(){
+        //     return back()->with('error', 'Erro ao cadastrar o perfil');
+        // }
     }
 
     /**

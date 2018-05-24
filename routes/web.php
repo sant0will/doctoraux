@@ -26,15 +26,15 @@ Route::group(['middleware' => ['first', 'auth']], function () {
     //Rota da página inicial
     Route::get('/home', 'HomeController@index')->name('home');
 
-    //Rotas para pessoas
-    Route::resource('profiles', 'ProfileController');
-
     Route::get('usuario/senha', 'UserController@changepassword');
 
     Route::patch('usuario/senha/{id}', 'NewPassController@updatepassword');
 });
 
 Route::group(['middleware' => 'admin'], function() {
+
+    //Rotas para pessoas
+    Route::resource('profiles', 'ProfileController');
 
     //Rotas para estados
     Route::resource('estados', 'EstadoController');

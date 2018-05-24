@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 18 May 2018 13:11:14 +0000.
+ * Date: Thu, 24 May 2018 12:29:33 +0000.
  */
 
 namespace App\Models;
@@ -17,6 +17,8 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $uf
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
+ * 
+ * @property \Illuminate\Database\Eloquent\Collection $addresses
  *
  * @package App\Models
  */
@@ -26,4 +28,9 @@ class Estado extends Eloquent
 		'nome',
 		'uf'
 	];
+
+	public function addresses()
+	{
+		return $this->hasMany(\App\Models\Address::class, 'state_id');
+	}
 }
