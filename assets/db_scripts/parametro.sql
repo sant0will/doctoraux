@@ -1,0 +1,1 @@
+INSERT INTO parametros (horas_gratuitas) VALUES ('8');
