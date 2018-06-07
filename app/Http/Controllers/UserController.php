@@ -10,6 +10,7 @@ use App\User;
 use App\Models\Type;
 use App\Models\Cidade;
 use App\Models\Estado;
+use App\Models\Specialty;
 
 use App\Services\RandomPass;
 
@@ -69,9 +70,10 @@ class UserController extends Controller
         $user_type = $user->type_id;
         $cidades = Cidade::orderBy('nome', 'asc')->get();
         $estados = Estado::orderBy('nome', 'asc')->get();
+        $especialidades = Specialty::all();
 
         if($user->save()){
-            return view('/profiles/create', compact('user_id', 'user_type' ,'cidades', 'estados'))->with('success', 'Usuário cadastrado! Complete o cadastro de perfil.');
+            return view('/profiles/create', compact('user_id', 'user_type' ,'cidades', 'estados', 'especialidades'))->with('success', 'Usuário cadastrado! Complete o cadastro de perfil.');
         } else {
             return back()->with('message', 'Falha no cadastro!');
         }

@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 11 May 2018 22:48:08 +0000.
+ * Date: Thu, 07 Jun 2018 12:04:47 +0000.
  */
 
 namespace App\Models;
@@ -20,15 +20,10 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $remember_token
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @property int $cidadao_id
  * @property int $type_id
  * 
- * @property \App\Models\Cidadao $cidadao
- * @property \App\Models\Type $Type
- * @property \Illuminate\Database\Eloquent\Collection $execucao_servicos
- * @property \Illuminate\Database\Eloquent\Collection $log_cancel_agend_servicos
- * @property \Illuminate\Database\Eloquent\Collection $log_cancel_servicos
- * @property \Illuminate\Database\Eloquent\Collection $ordem_servicos
+ * @property \App\Models\Type $type
+ * @property \Illuminate\Database\Eloquent\Collection $profiles
  *
  * @package App\Models
  */
@@ -36,7 +31,6 @@ class User extends Eloquent
 {
 	protected $casts = [
 		'access' => 'bool',
-		'cidadao_id' => 'int',
 		'type_id' => 'int'
 	];
 
@@ -51,37 +45,16 @@ class User extends Eloquent
 		'password',
 		'access',
 		'remember_token',
-		'cidadao_id',
 		'type_id'
 	];
 
-	public function cidadao()
-	{
-		return $this->belongsTo(\App\Models\Cidadao::class);
-	}
-
-	public function Type()
+	public function type()
 	{
 		return $this->belongsTo(\App\Models\Type::class);
 	}
 
-	public function execucao_servicos()
+	public function profiles()
 	{
-		return $this->hasMany(\App\Models\ExecucaoServico::class, 'usuario_id');
-	}
-
-	public function log_cancel_agend_servicos()
-	{
-		return $this->hasMany(\App\Models\LogCancelAgendServico::class);
-	}
-
-	public function log_cancel_servicos()
-	{
-		return $this->hasMany(\App\Models\LogCancelServico::class);
-	}
-
-	public function ordem_servicos()
-	{
-		return $this->hasMany(\App\Models\OrdemServico::class);
+		return $this->hasMany(\App\Models\Profile::class);
 	}
 }

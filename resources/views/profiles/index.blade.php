@@ -49,13 +49,13 @@
                     @endif                
                 <table id="td-cidadaos" class="table table-bordered table-striped dataTable" role="grid" aria-describedby="td-cidadaos_info">
                     <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nome</th>
-                        <th>CPF / CNPJ</th>
-                        <th>E-mail</th>
-                        <th>Ações</th>
-                    </tr>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>CPF / CNPJ</th>
+                            <th>E-mail</th>
+                            <th>Ações</th>
+                        </tr>
                     </thead>
                     <tbody>
                         

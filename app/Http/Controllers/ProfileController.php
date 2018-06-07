@@ -54,7 +54,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+            dd($request);
         $v = Validator::make($request->all(), [
             'name' => 'required|string|min:7|max:50',
             'phone' => 'required|string|min:10|max:15',
@@ -78,7 +78,7 @@ class ProfileController extends Controller
             return back()->with('message', 'Confira os dados informados!')->withErrors($v)->withInput();
         }
 
-        // try{
+        
         //     dd($request);
         //     $address = new Address;
         //     $address->cep = $request->cep;
