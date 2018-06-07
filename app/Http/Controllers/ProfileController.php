@@ -7,6 +7,7 @@ use App\Models\Profile;
 use App\Models\Address;
 use App\Models\Cidade;
 use App\Models\Estado;
+use App\Models\Doctor;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -54,7 +55,7 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-            dd($request);
+        //dd($request);
         $v = Validator::make($request->all(), [
             'name' => 'required|string|min:7|max:50',
             'phone' => 'required|string|min:10|max:15',
@@ -67,6 +68,7 @@ class ProfileController extends Controller
             'numero' => 'required|string|max:6',
             'complemento' => 'nullable|string|max:90',
             'crm' => 'required|string|max:7',
+            "especialidade" => 'required|not_in:--- Selecione a especialidade ---',
             'cpf' => 'required|string|max:14',
             'birth' => 'required|string|max:10',
             'email' => 'required|string|max:90',
@@ -79,34 +81,41 @@ class ProfileController extends Controller
         }
 
         
-        //     dd($request);
-        //     $address = new Address;
-        //     $address->cep = $request->cep;
-        //     $address->state_id = $request->estado;
-        //     $address->city_id = $request->cidade;
-        //     $address->neighborhood = $request->bairro;
-        //     $address->street = $request->logradouro;
-        //     $address->number = $request->numero;
-        //     $address->complement = $request->complemento;
-        //     $address->save()
-
-        //     $profile = new Profile;
-        //     $profile->name = $request->name;
-        //     $profile->phone = $request->phone;
-        //     $profile->gender = $request->sexo;
-        //     $profile->user_id = $request->id;
-        //     $profile->address_id = $address->id;
-        //     $profile->save()
-
-
-
-
-                    
-               
-        //     return redirect('/profiles')->with(['success' => 'Cadastro realizado com sucesso!', 'name' => $user->name, 'email' => $user->email, 'pass' => $pass, 'id' => $user->id]);
-        // }catch(){
-        //     return back()->with('error', 'Erro ao cadastrar o perfil');
-        // }
+        $address = new Address;
+        $address->cep = $request->cep;
+        $address->state_id = $request->estado;
+        $address->city_id = $request->cidade;
+        $address->neighborhood = $request->bairro;
+        $address->street = $request->logradouro;
+        $address->number = $request->numero;
+        $address->complement = $request->complemento;
+        if($address->save()){
+            $profile = new Profile;
+            $profile->name = $request->name;
+            $profile->phone = $request->phone;
+            $profile->gender = $request->sexo;
+            $profile->user_id = $request->id;
+            $profile->address_id = $address->id;
+            if($profile->save()){
+                $doctor = new Doctor;
+                $doctor->birth = $request->birth;
+                $doctor->cpf = $request->cpf;
+                $doctor->crm = $request->crm;
+                $doctor->email = $request->email;
+                $doctor->phone2	= $request->phone2;
+                $doctor->profile_id	 = $profile->id;
+                $doctor->specialty_id = $request->especialidade;
+                if($doctor->save()){
+                    return redirect('/profiles')->with(['success' => 'Cadastro realizado com sucesso!', 'name' => $user->name, 'email' => $user->email, 'pass' => $pass, 'id' => $user->id]);
+                }else{
+                    return back()->with('error', 'Erro ao cadastrar o perfil');
+                }
+            }else{
+                return back()->with('error', 'Falha ao cadastrar o perfil!')->withInput();  
+            }
+        }else{
+            return back()->with('error', 'Falha ao cadastrar endereço!')->withInput();
+        }
     }
 
     /**

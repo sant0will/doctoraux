@@ -143,7 +143,7 @@
 							</div>
 						</div>
 
-						<input type="text" value="{{$user_id}}" hidden>
+						<input type="text" name="id" value="{{$user_id}}" hidden>
 					</div>	
 
 					{{-- Formulário caso seja Médico --}}
@@ -162,6 +162,17 @@
 										<strong>{{ $errors->get('crm')[0] }}</strong>
 									</span>
 								@endif
+							</div>
+							<div class="form-group has-feedback {{ $errors->has('especialidade') ? 'has-error' : '' }}">
+								<label for="especialidade" class="col-sm-2 control-label">Especialidade *</label>
+								<div class="col-sm-10">
+									<select id="especialidade" class="form-control" name="especialidade" required>
+											<option value="--- Selecione a especialidade ---" selected>--- Selecione a especialidade ---</option>
+										@foreach($especialidades as $especialidade)
+											<option value="{{ $especialidade->id }}">{{$especialidade->name}}</option>
+										@endforeach
+									</select>
+								</div>
 							</div>
 							<div class="form-group has-feedback {{ $errors->has('cpf') ? 'has-error' : '' }}">
 								<label for="cpf" class="col-sm-2 control-label">CPF *</label>
@@ -227,17 +238,9 @@
 									</span>
 								@endif
 							</div>
-							<div class="form-group has-feedback {{ $errors->has('especialidade') ? 'has-error' : '' }}">
-							<label for="especialidade" class="col-sm-2 control-label">especialidade de Medida *</label>
-							<div class="col-sm-10">
-								<select id="especialidade" class="form-control" name="especialidade" required>
-										<option value="--- Selecione a especialidade ---" selected>--- Selecione a especialidade ---</option>
-									@foreach($especialidades as $especialidade)
-										<option value="{{ $especialidade->id }}">{{$especialidade->name}}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
+
+							
+
 							<div class="form-group has-feedback {{ $errors->has('cpf') ? 'has-error' : '' }}">
 								<label for="cpf" class="col-sm-2 control-label">CPF *</label>
 								<div class="cpf col-sm-10">
@@ -314,7 +317,7 @@
 			$("#phone").mask("(99) 9999-99999");
 			$("#phone2").mask("(99) 9999-99999");
 			$("#cpf").mask('000.000.000-00', {reverse: true});
-			$("#birth")).mask('00/00/0000');
+			$("#birth").mask('00/00/0000');
 			$("#cep").mask("99999-999");
 			$("#numero").mask("99999");
 			$("#horas").mask('AAA:ZA', { reverese:true,
