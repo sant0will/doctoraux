@@ -38,6 +38,11 @@ class CreateFkTable extends Migration
             $table->unsignedInteger('specialty_id');
             $table->foreign('specialty_id')->references('id')->on('specialties');
         });  
+
+        Schema::table('atendents', function (Blueprint $table) {
+            $table->unsignedInteger('profile_id');
+            $table->foreign('profile_id')->references('id')->on('profiles');
+        });
       
     }
 

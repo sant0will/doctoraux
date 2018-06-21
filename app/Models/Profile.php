@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Thu, 07 Jun 2018 12:04:47 +0000.
+ * Date: Thu, 07 Jun 2018 22:56:38 +0000.
  */
 
 namespace App\Models;
@@ -23,6 +23,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * 
  * @property \App\Models\Address $address
  * @property \App\Models\User $user
+ * @property \Illuminate\Database\Eloquent\Collection $atendents
  * @property \Illuminate\Database\Eloquent\Collection $doctors
  *
  * @package App\Models
@@ -50,6 +51,11 @@ class Profile extends Eloquent
 	public function user()
 	{
 		return $this->belongsTo(\App\Models\User::class);
+	}
+
+	public function atendents()
+	{
+		return $this->hasMany(\App\Models\Atendent::class);
 	}
 
 	public function doctors()

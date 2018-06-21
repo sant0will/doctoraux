@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col-sm-12">
 
-                @if(session()->has('pass'))
+                @if(session()->has('success'))
                     <div class="modal fade" id="modal-pass">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -26,9 +26,9 @@
                                 <h4 class="modal-title">Confirmação</h4>
                             </div>
                             <div class="modal-body">
-                                <p><b>Nome do usuário: {{ session()->get('name') }}</b></p>
-                                <p><b>Email: {{ session()->get('email') }}</b></p>
-                                <p><b>Senha: {{ session()->get('pass') }}</b></p>
+                                <p><b>Nome do usuário: {{ $user->name }}</b></p>
+                                <p><b>Email: {{  $user->email }}</b></p>
+                                <p><b>Senha: {{  $user->password }}</b></p>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">Fechar</button>       

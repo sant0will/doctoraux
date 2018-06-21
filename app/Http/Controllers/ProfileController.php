@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use App\Models\User;
 use App\Models\Profile;
 use App\Models\Address;
 use App\Models\Cidade;
 use App\Models\Estado;
 use App\Models\Doctor;
+use App\Models\Atendent;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -55,8 +57,9 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request);
+        
         $v = Validator::make($request->all(), [
+            'id' => 'required|integer',
             'name' => 'required|string|min:7|max:50',
             'phone' => 'required|string|min:10|max:15',
             'sexo' => 'required|max:1',
@@ -80,6 +83,7 @@ class ProfileController extends Controller
             return back()->with('message', 'Confira os dados informados!')->withErrors($v)->withInput();
         }
 
+        $user = User::find($request->id);
         
         $address = new Address;
         $address->cep = $request->cep;
@@ -97,18 +101,34 @@ class ProfileController extends Controller
             $profile->user_id = $request->id;
             $profile->address_id = $address->id;
             if($profile->save()){
-                $doctor = new Doctor;
-                $doctor->birth = $request->birth;
-                $doctor->cpf = $request->cpf;
-                $doctor->crm = $request->crm;
-                $doctor->email = $request->email;
-                $doctor->phone2	= $request->phone2;
-                $doctor->profile_id	 = $profile->id;
-                $doctor->specialty_id = $request->especialidade;
-                if($doctor->save()){
-                    return redirect('/profiles')->with(['success' => 'Cadastro realizado com sucesso!', 'name' => $user->name, 'email' => $user->email, 'pass' => $pass, 'id' => $user->id]);
-                }else{
-                    return back()->with('error', 'Erro ao cadastrar o perfil');
+                if($request->tipo == 2){
+                    $doctor = new Doctor;
+                    $doctor->birth = $request->birth;
+                    $doctor->cpf = $request->cpf;
+                    $doctor->crm = $request->crm;
+                    $doctor->email = $request->email;
+                    $doctor->phone2	= $request->phone2;
+                    $doctor->profile_id	 = $profile->id;
+                    $doctor->specialty_id = $request->especialidade;
+                    if($doctor->save()){
+                       // dd($user);
+                        return redirect('/users')->with('success', 'Cadastro de Médico realizado com sucesso!', 'user', $user);
+                    }else{
+                        return back()->with('error', 'Erro ao cadastrar o perfil');
+                    }
+                }else if($request->tipo == 2){
+                    $atendente = new Atendet;
+                    $atendente->birth = $request->birth;
+                    $atendente->cpf = $request->cpf;
+                    $atendente->pis = $request->pis;
+                    $atendente->email = $request->email;
+                    $atendente->phone2	= $request->phone2;
+                    $atendente->profile_id	 = $profile->id;
+                    if($atendente->save()){
+                        return redirect('/users')->with('success', 'Cadastro de Atendente realizado com sucesso!', 'user', $user);
+                    }else{
+                        return back()->with('error', 'Erro ao cadastrar o perfil');
+                    }
                 }
             }else{
                 return back()->with('error', 'Falha ao cadastrar o perfil!')->withInput();  

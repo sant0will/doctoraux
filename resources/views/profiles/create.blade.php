@@ -144,14 +144,30 @@
 						</div>
 
 						<input type="text" name="id" value="{{$user_id}}" hidden>
+						<input type="text" name="tipo" value="{{$user_type}}" hidden>
 					</div>	
 
-					{{-- Formulário caso seja Médico --}}
-					@if($user_type == 2)
-						<div class="box-header with-border">
-							<h3 class="box-title">Dados do Médico	</h3>
-						</div>
-						<div class="box-body">
+					
+					<div class="box-header with-border">
+						@if($user_type == 2)
+							<h3 class="box-title">Dados do Médico</h3>
+						@elseif($user_type == 3)
+							<h3 class="box-title">Dados do Atendente</h3>
+						@endif
+					</div>
+					<div class="box-body">
+						<div class="form-group has-feedback {{ $errors->has('cpf') ? 'has-error' : '' }}">
+							<label for="cpf" class="col-sm-2 control-label">CPF *</label>
+							<div class="cpf col-sm-10">
+								<input type="text" class="form-control" name="cpf" id="cpf" minlength="8" maxlength="9" value="{{old('cpf')}}" required>
+							</div>
+							@if ($errors->has('cpf'))
+								<span class="help-block">
+									<strong>{{ $errors->get('cpf')[0] }}</strong>
+								</span>
+							@endif
+						</div>						
+						@if($user_type == 2)
 							<div class="form-group has-feedback {{ $errors->has('crm') ? 'has-error' : '' }}">
 								<label for="crm" class="col-sm-2 control-label">CRM *</label>
 								<div class="crm col-sm-10">
@@ -174,122 +190,58 @@
 									</select>
 								</div>
 							</div>
-							<div class="form-group has-feedback {{ $errors->has('cpf') ? 'has-error' : '' }}">
-								<label for="cpf" class="col-sm-2 control-label">CPF *</label>
-								<div class="cpf col-sm-10">
-									<input type="text" class="form-control" name="cpf" id="cpf" minlength="8" maxlength="9" value="{{old('cpf')}}" required>
+						@elseif($user_type == 3)
+							<div class="form-group has-feedback {{ $errors->has('pis') ? 'has-error' : '' }}">
+								<label for="pis" class="col-sm-2 control-label">PIS *</label>
+								<div class="pis col-sm-10">
+									<input type="text" class="form-control" name="pis" id="pis" minlength="4" maxlength="9" value="{{old('pis')}}" required>
 								</div>
-								@if ($errors->has('cpf'))
+								@if ($errors->has('pis'))
 									<span class="help-block">
-										<strong>{{ $errors->get('cpf')[0] }}</strong>
+										<strong>{{ $errors->get('pis')[0] }}</strong>
 									</span>
 								@endif
 							</div>
-
-							<div class="form-group has-feedback {{ $errors->has('birth') ? 'has-error' : '' }}">
-								<label for="birth" class="col-sm-2 control-label">Data de Nascimento *</label>	
-								<div id="birth-div-input" class="col-sm-10" >
-									<input type="text" class="form-control" name="birth" id="birth" placeholder="" minlength="10" maxlength="10" value="{{old('birth')}}" required>
-								</div>
-								@if ($errors->has('birth'))
-									<span class="help-block">
-										<strong>{{ $errors->get('birth')[0] }}</strong>
-									</span>
-								@endif
+						@endif
+						<div class="form-group has-feedback {{ $errors->has('birth') ? 'has-error' : '' }}">
+							<label for="birth" class="col-sm-2 control-label">Data de Nascimento *</label>	
+							<div id="birth-div-input" class="col-sm-10" >
+								<input type="text" class="form-control" name="birth" id="birth" placeholder="" minlength="10" maxlength="10" value="{{old('birth')}}" required>
 							</div>
-
-							<div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-								<label for="email" class="col-sm-2 control-label">Email *</label>
-								<div class="col-sm-10">
-									<input type="email" class="form-control" name="email" placeholder="" minlength="3" maxlength="90" value="{{old('email')}}" required>
-								</div>
-								@if ($errors->has('email'))
-									<span class="help-block">
-										<strong>{{ $errors->get('email')[0] }}</strong>
-									</span>
-								@endif
-							</div>
-
-							<div class="form-group has-feedback {{ $errors->has('phone2') ? 'has-error' : '' }}">
-								<label for="phone2" class="col-sm-2 control-label">Telefone Secundário</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="phone2" id="phone" placeholder="" minlength="10" maxlength="15" value="{{old('phone')}}">
-								</div>
-								@if ($errors->has('phone2'))
-									<span class="help-block">
-										<strong>{{ $errors->get('phone2')[0] }}</strong>
-									</span>
-								@endif
-							</div>
+							@if ($errors->has('birth'))
+								<span class="help-block">
+									<strong>{{ $errors->get('birth')[0] }}</strong>
+								</span>
+							@endif
 						</div>
-					@elseif($user_type == 3)
-					<div class="box-header with-border">
-							<h3 class="box-title">Dados do Atendente</h3>
+
+						<div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
+							<label for="email" class="col-sm-2 control-label">Email *</label>
+							<div class="col-sm-10">
+								<input type="email" class="form-control" name="email" placeholder="" minlength="3" maxlength="90" value="{{old('email')}}" required>
+							</div>
+							@if ($errors->has('email'))
+								<span class="help-block">
+									<strong>{{ $errors->get('email')[0] }}</strong>
+								</span>
+							@endif
 						</div>
-						<div class="box-body">
-							<div class="form-group has-feedback {{ $errors->has('crm') ? 'has-error' : '' }}">
-								<label for="crm" class="col-sm-2 control-label">CRM *</label>
-								<div class="crm col-sm-10">
-									<input type="text" class="form-control" name="crm" id="crm" minlength="7" maxlength="7" value="{{old('crm')}}" required>
-								</div>
-								@if ($errors->has('crm'))
-									<span class="help-block">
-										<strong>{{ $errors->get('crm')[0] }}</strong>
-									</span>
-								@endif
-							</div>
 
-							
-
-							<div class="form-group has-feedback {{ $errors->has('cpf') ? 'has-error' : '' }}">
-								<label for="cpf" class="col-sm-2 control-label">CPF *</label>
-								<div class="cpf col-sm-10">
-									<input type="text" class="form-control" name="cpf" id="cpf" minlength="8" maxlength="9" value="{{old('cpf')}}" required>
-								</div>
-								@if ($errors->has('cpf'))
-									<span class="help-block">
-										<strong>{{ $errors->get('cpf')[0] }}</strong>
-									</span>
-								@endif
+						<div class="form-group has-feedback {{ $errors->has('phone2') ? 'has-error' : '' }}">
+							<label for="phone2" class="col-sm-2 control-label">Telefone Secundário</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="phone2" id="phone" placeholder="" minlength="10" maxlength="15" value="{{old('phone')}}">
 							</div>
-
-							<div class="form-group has-feedback {{ $errors->has('birth') ? 'has-error' : '' }}">
-								<label for="birth" class="col-sm-2 control-label">Data de Nascimento *</label>	
-								<div id="birth-div-input" class="col-sm-10" >
-									<input type="text" class="form-control" name="birth" id="birth" placeholder="" minlength="10" maxlength="10" value="{{old('birth')}}" required>
-								</div>
-								@if ($errors->has('birth'))
-									<span class="help-block">
-										<strong>{{ $errors->get('birth')[0] }}</strong>
-									</span>
-								@endif
-							</div>
-
-							<div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-								<label for="email" class="col-sm-2 control-label">Email *</label>
-								<div class="col-sm-10">
-									<input type="email" class="form-control" name="email" placeholder="" minlength="3" maxlength="90" value="{{old('email')}}" required>
-								</div>
-								@if ($errors->has('email'))
-									<span class="help-block">
-										<strong>{{ $errors->get('email')[0] }}</strong>
-									</span>
-								@endif
-							</div>
-
-							<div class="form-group has-feedback {{ $errors->has('phone2') ? 'has-error' : '' }}">
-								<label for="phone2" class="col-sm-2 control-label">Telefone Secundário</label>
-								<div class="col-sm-10">
-									<input type="text" class="form-control" name="phone2" id="phone" placeholder="" minlength="10" maxlength="15" value="{{old('phone')}}">
-								</div>
-								@if ($errors->has('phone2'))
-									<span class="help-block">
-										<strong>{{ $errors->get('phone2')[0] }}</strong>
-									</span>
-								@endif
-							</div>
+							@if ($errors->has('phone2'))
+								<span class="help-block">
+									<strong>{{ $errors->get('phone2')[0] }}</strong>
+								</span>
+								
+							@endif
 						</div>
-					@endif
+					</div>
+					
+			
 
 					<div class="box-footer">						 
 						<button type="submit" class="btn btn-primary pull-right" id="btn-submit">Salvar</button>
@@ -317,6 +269,7 @@
 			$("#phone").mask("(99) 9999-99999");
 			$("#phone2").mask("(99) 9999-99999");
 			$("#cpf").mask('000.000.000-00', {reverse: true});
+			$("#pis").mask("000.00000.00-0", {reverse: true});
 			$("#birth").mask('00/00/0000');
 			$("#cep").mask("99999-999");
 			$("#numero").mask("99999");
